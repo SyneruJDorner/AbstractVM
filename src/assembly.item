@@ -1,0 +1,24 @@
+; -------------
+; exemple.avm -
+; -------------
+
+push int32(42)
+push int32(33)
+add
+push float(44.55)
+mul
+dump
+
+;;Testing Div Here
+push double(42.42)
+push int32(42)
+div
+dump
+
+
+pop
+
+push double(42.42)
+assert double(42.42)
+
+exit
