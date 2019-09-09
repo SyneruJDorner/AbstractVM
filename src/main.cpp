@@ -18,7 +18,8 @@ std::string trim(std::string &str)
 	p = str.find_last_not_of(" \t");
    	if (std::string::npos != p)
       str.erase(p + 1);
-  return (str);
+
+  	return (str);
 }
 
 void parseConsole(std::string &s, int nb, int &error)
@@ -29,6 +30,7 @@ void parseConsole(std::string &s, int nb, int &error)
 
 	if ((i = s.find(";")) != -1)
 		s.assign(s, 0, i);
+
 	if (!s.empty())
 	{
 		if (!regex_match(s, reg))
@@ -45,14 +47,17 @@ void readline(std::list<std::string> &s)
 	std::regex reg("([ \t]+)?exit([ \t]+)?");
 	int flag = 0;
 	std::cout << "Please type your source assebly (end with ';;'):" << std::endl;
+
 	while (std::getline(std::cin, line) && line.compare(";;"))
 	{
 		s.push_back(trim(line));
 		if (regex_match(line, reg))
 			flag++;
 	}
+
 	if (line.compare(";;"))
 		throw VMExceptions::SemicolonException();
+
 	if (!flag)
 		throw VMExceptions::ExitException();
 }
@@ -67,6 +72,7 @@ void readfile(const char *file, std::list<std::string> &s)
 	{
 		while (std::getline(stream, line) && !regex_match(line, reg))
 			s.push_back(trim(line));
+
 		if (!regex_match(line, reg))
 			throw VMExceptions::ExitException();
 	}
@@ -77,6 +83,7 @@ void readfile(const char *file, std::list<std::string> &s)
 void display(std::list<std::string> s)
 {
 	std::list<std::string>::iterator p = s.begin();
+
 	while (p != s.end())
 	{
 		std::cout << *p << std::endl;
@@ -87,7 +94,6 @@ void display(std::list<std::string> s)
 void lexerStandard(std::list<std::string> s)
 {
 	std::list<std::string>::iterator p = s.begin();
-
 	std::locale loc;
 	std::cmatch val;
 	std::cmatch typ;
@@ -129,7 +135,9 @@ int main(int argc, const char **argv)
 			std::cout << "usage ./avm or ./avm file" << std::endl;
 			return (0);
 		}
+
 		std::list<std::string>::iterator p = s.begin();
+
 		while (p != s.end())
 		{
 			parseConsole(*p, std::distance(s.begin(), p) + offset, error);
@@ -143,6 +151,7 @@ int main(int argc, const char **argv)
 
 		if (error)
 			throw VMExceptions::SyntaxException();
+
 		lexerStandard(s);
 	}
 	catch(std::exception &e)
