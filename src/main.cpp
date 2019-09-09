@@ -105,9 +105,9 @@ void lexerStandard(std::list<std::string> s)
 	    std::string type(typ[0]);
 	    type.erase(type.begin());
 		type[0] = std::toupper(type[0], loc);
-	    std::string valeur(val[1]);
+	    std::string value(val[1]);
 	    
-	    OperandFactory::instance->HandleInstruction(trim(instruction), OperandFactory::instance->getTypeWithString(trim(type)), trim(valeur));
+	    OperandFactory::instance->HandleInstruction(trim(instruction), OperandFactory::instance->getTypeWithString(trim(type)), trim(value));
 		p++;
 	}
 }
